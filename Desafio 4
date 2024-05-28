@@ -1,0 +1,104 @@
+class Aluno:
+    def __init__(self):
+        self.nome = input("Nome do aluno: ")
+        self.sexo = self.obter_opcao("Sexo do aluno:", ["Masculino", "Feminino", "Outro"])
+        self.endereco = input("Endereço do aluno: ")
+        self.cidade = input("Cidade do aluno: ")
+        self.estado = input("Estado do aluno: ")
+        self.cep = self.obter_cep()
+        self.telefone = self.obter_numero("Telefone do aluno: ")
+        self.data_nascimento = self.obter_data("Data de nascimento do aluno (DD/MM/AAAA): ")
+        self.rg = self.obter_rg()
+        self.nome_pai = input("Nome do pai do aluno: ")
+        self.nome_mae = input("Nome da mãe do aluno: ")
+        self.grau_escolaridade = self.obter_grau_escolaridade()
+
+    def obter_opcao(self, mensagem, opcoes):
+        while True:
+            print(mensagem)
+            for i, opcao in enumerate(opcoes):
+                print(f"{i+1}. {opcao}")
+            escolha = input("Escolha a opção pelo número: ")
+            if escolha.isdigit() and 1 <= int(escolha) <= len(opcoes):
+                return opcoes[int(escolha) - 1]
+            else:
+                print("Opção inválida. Escolha um número de opção válido.")
+
+    def obter_cep(self):
+        while True:
+            cep = input("CEP do aluno (no formato XXXXX-XXX ou XXXXX-XX): ")
+            cep_sem_hifen = cep.replace("-", "")
+            if (len(cep) == 9 and cep[5] == '-' and cep_sem_hifen.isdigit()) or (len(cep) == 8 and cep_sem_hifen.isdigit()):
+                return cep
+            else:
+                print("CEP inválido. Certifique-se de que está no formato correto (XXXXX-XXX ou XXXXX-XX).")
+
+    def obter_numero(self, mensagem):
+        while True:
+            numero = input(mensagem)
+            if numero.isdigit():
+                return numero
+            else:
+                print("Número inválido. Certifique-se de que contém apenas dígitos.")
+
+    def obter_data(self, mensagem):
+        while True:
+            data = input(mensagem)
+            partes = data.split('/')
+            if len(partes) == 3:
+                dia, mes, ano = partes
+                if dia.isdigit() and mes.isdigit() and ano.isdigit():
+                    dia = int(dia)
+                    mes = int(mes)
+                    ano = int(ano)
+                    if 1 <= dia <= 31 and 1 <= mes <= 12 and 1900 <= ano <= 9999:
+                        return f"{ano:04d}-{mes:02d}-{dia:02d}"
+            print("Data inválida. Por favor, digite no formato DD/MM/AAAA.")
+
+    def obter_rg(self):
+        while True:
+            rg = input("RG do aluno (9 ou 10 dígitos): ")
+            if rg.isdigit() and len(rg) in [9, 10]:
+                return rg
+            else:
+                print("RG inválido. Certifique-se de que contém 9 ou 10 dígitos.")
+
+    def obter_grau_escolaridade(self):
+        opcoes = ["Ensino Fundamental", "Ensino Médio", "Ensino Superior", "Pós-graduação"]
+        return self.obter_opcao("Selecione o grau de escolaridade do aluno:", opcoes)
+
+# Cadastro do aluno
+print("Cadastro de Aluno")
+aluno = Aluno()
+
+# Exibição das informações do aluno
+print("\nInformações do Aluno:")
+print("Nome:", aluno.nome)
+print("Sexo:", aluno.sexo)
+print("Endereço:", aluno.endereco)
+print("Cidade:", aluno.cidade)
+print("Estado:", aluno.estado)
+print("CEP:", aluno.cep)
+print("Telefone:", aluno.telefone)
+print("Data de Nascimento:", aluno.data_nascimento)
+print("RG:", aluno.rg)
+print("Nome do Pai:", aluno.nome_pai)
+print("Nome da Mãe:", aluno.nome_mae)
+print("Grau de Escolaridade:", aluno.grau_escolaridade)
+
+# Confirmação e possibilidade de alteração de dados
+while True:
+    alterar_dados = input("\nDeseja alterar alguma informação? (S/N): ")
+    if alterar_dados.upper() in ["S", "SIM"]:
+        campo = input("Qual informação deseja alterar? ")
+        if hasattr(aluno, campo.lower()):
+            setattr(aluno, campo.lower(), input(f"Digite o novo(a) {campo.lower().replace('_', ' ')}: "))
+        else:
+            print("Campo inválido.")
+    elif alterar_dados.upper() in ["N", "NÃO"]:
+        break
+    else:
+        print("Opção inválida. Por favor, responda com 'S' para Sim ou 'N' para Não.")
+
+# Exibição da mensagem de conclusão
+print("Cadastro concluído!")

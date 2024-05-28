@@ -1,0 +1,38 @@
+# 1. Criar listas de matemática1 e contabilidade1
+matematica1 = []
+contabilidade1 = []
+
+# 3. Cadastrar os alunos por disciplina
+# 3.1 Criar uma repetição até no máximo de 150 para a lista de matemática1
+lista = 0
+while lista < 150:
+    matricula = input('Entre com o num. da matr. para Matemática1, ou 0 pra sair: ')
+    if matricula == '0':
+        break
+    matematica1.append(matricula)
+    lista += 1
+
+# 3.2 Criar uma repetição até no máximo de 100 para a lista de contabilidade1
+lista = 0
+while lista < 100:
+    matricula = input('Entre com o num. da matr. para Contabilidade1, ou 0 pra sair: ')
+    if matricula == '0':
+        break
+    contabilidade1.append(matricula)
+    lista += 1
+
+# Convertendo as listas em conjuntos para usar a operação de interseção
+conjunto_matematica = set(matematica1)
+conjunto_contabilidade = set(contabilidade1)
+
+# Verificando se as matrículas foram inseridas corretamente
+print("Matrículas em matemática1:", conjunto_matematica)
+print("Matrículas em contabilidade1:", conjunto_contabilidade)
+
+# Encontrando a interseção
+resultado = conjunto_matematica.intersection(conjunto_contabilidade)
+
+if resultado:
+    print("As matrículas em ambas as disciplinas são:", resultado)
+else:
+    print("Não há matrículas em comum entre as duas disciplinas.")

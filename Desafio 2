@@ -1,0 +1,79 @@
+import datetime
+
+class ContaBancaria:
+    def __init__(self):
+        self.saldo = 1500
+        self.limite_diario = 500
+        self.saque_diario = 0
+        self.movimentacoes = []
+
+    def depositar(self, valor):
+        if valor > 0:
+            self.saldo += valor
+            self.movimentacoes.append(f'Depósito de R$ {valor:.2f} realizado em {datetime.date.today()}.')
+        else:
+            print('O valor do depósito deve ser positivo.')
+
+    def sacar(self, valor):
+        if valor > 0:
+            if self.saque_diario >= 3:
+                print('Limite diário de saques atingido.')
+            elif valor > self.limite_diario:
+                print(f'Valor do saque excede o limite diário de R$ {self.limite_diario:.2f}.')
+            elif valor > self.saldo:
+                print('Saldo insuficiente para realizar o saque.')
+            else:
+                self.saldo -= valor
+                self.movimentacoes.append(f'Saque de R$ {valor:.2f} realizado em {datetime.date.today()}.')
+                self.saque_diario += 1
+                print(f'Saque de R$ {valor:.2f} realizado com sucesso.')
+        else:
+            print('O valor do saque deve ser positivo.')
+
+    def extrato(self):
+        print('Extrato:')
+        print(f'Saldo atual: R$ {self.saldo:.2f}')
+        if self.movimentacoes:
+            for movimentacao in self.movimentacoes:
+                print(movimentacao)
+        else:
+            print()
+
+
+def main():
+    conta = ContaBancaria()
+
+    # Solicitar operação (depósito, saque ou extrato)
+    while True:
+        operacao = input("Você deseja depositar, sacar ou verificar o extrato? ").lower()
+
+        if operacao == 'depositar':
+            try:
+                valor_deposito = float(input("Qual valor você deseja depositar? R$ "))
+                conta.depositar(valor_deposito)
+            except ValueError:
+                print("Entrada inválida. Por favor, insira um valor numérico.")
+
+        elif operacao == 'sacar':
+            try:
+                valor_saque = float(input("Qual valor você deseja sacar? R$ "))
+                conta.sacar(valor_saque)
+            except ValueError:
+                print("Entrada inválida. Por favor, insira um valor numérico.")
+
+        elif operacao == 'verificar o extrato':
+            # Exibir extrato atualizado
+            conta.extrato()
+
+        else:
+            print("Operação inválida. Por favor, escolha 'depositar', 'sacar' ou 'verificar o extrato'.")
+
+if __name__ == "__main__":
+    main()
+
+
+
+
+
+
+

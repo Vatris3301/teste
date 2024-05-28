@@ -1,0 +1,27 @@
+import random
+
+alunos = [
+    "Caio", "Davi", "Edmilson", "Erick", "Esmael", "Alison", "Expedito",
+    "Armando", "Kauã", "Marcos", "Graziel", "Raiane", "Natanael", "Gabriel",
+    "Pedro", "Silas"
+]
+
+# Embaralhando a lista de alunos
+random.shuffle(alunos)
+
+# Função para dividir a lista de alunos em equipes
+def dividir_em_equipes(alunos, tamanho_max):
+    equipes = []
+    while alunos:
+        equipe = alunos[:tamanho_max]
+        equipes.append(equipe)
+        alunos = alunos[tamanho_max:]
+    return equipes
+
+# Dividindo os alunos em equipes de no máximo 4 membros
+equipes = dividir_em_equipes(alunos, 4)
+
+# Mostrando as equipes
+print("Formações possíveis:")
+for i, equipe in enumerate(equipes, start=1):
+    print(f"Equipe {i}: {', '.join(equipe)}")
